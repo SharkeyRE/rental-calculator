@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rental Wealth Salary Replacement Calculator • Sharkey Real Estate Investment Advisors</title>
+  <style>
+    :root{
+      --bg:#0e2e49;           /* deep navy */
+      --bg-2:#123a59;         /* slightly lighter */
+      --primary:#18a7b9;      /* cyan */
+      --primary-2:#1ec6db;    /* lighter cyan */
+      --text:#0f172a;         /* slate-900 */
+      --muted:#5b6b7a;        /* slate-500 */
+      --card:#ffffff;
+      --ring:rgba(24,167,185,.35);
+      --ok:#10b981;           /* green */
+      --soft:#ffffff;         /* pure white for on-dark text */
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+    }
+    .wrap{max-width:1100px;margin:0 auto;padding:32px 20px 56px}
+    header{display:flex;align-items:center;gap:14px;margin-bottom:24px;color:var(--soft)}
+    header h1{font-size:18px;margin:0;letter-spacing:.4px;color:var(--soft)}
+    .badge{display:inline-block;background:transparent;color:var(--soft);border:1px solid rgba(241,245,249,.5);padding:4px 8px;border-radius:999px;font-size:12px;font-weight:700}
+
+    .brand{
+      display:flex;align-items:center;gap:12px;color:var(--soft)
+    }
+    .brand h1{margin:0;font-size:18px;font-weight:800;letter-spacing:.3px}
+    .brand small{display:block;font-size:12px;opacity:.9}
+
+    .hero{background:transparent;border-radius:18px;padding:0}
+    .hero h2{margin:0 0 8px;font-size:30px;color:var(--soft)}
+    .hero p{margin:0 0 22px;color:var(--soft)}
+    .hero .inner{background:transparent;border-radius:18px;padding:28px}
+
+    .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+
+    .panel{background:var(--card);border:1px solid #e9eef3;border-radius:16px;padding:18px}
+    label{display:block;font-size:14px;color:var(--muted);margin:10px 0 6px}
+    input, select{width:100%;padding:12px 14px;border:1px solid #d8e2ea;border-radius:12px;font-size:16px;outline:none}
+    input:focus, select:focus{border-color:var(--primary);box-shadow:0 0 0 4px var(--ring)}
+
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:680px){.row{grid-template-columns:1fr}}
+
+    .btn{display:inline-block;margin-top:12px;background:linear-gradient(90deg,var(--primary),var(--primary-2));
+      color:#fff;border:none;padding:14px 18px;border-radius:12px;font-weight:700;letter-spacing:.3px;cursor:pointer}
+
+    .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:12px}
+    @media (max-width:680px){.stats{grid-template-columns:1fr}}
+    .stat{background:#f8fafc;border:1px solid #e6edf3;border-radius:14px;padding:14px}
+    .stat h4{margin:0 0 6px;font-size:13px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+    .stat .val{font-size:22px;font-weight:800}
+
+    .meter{height:12px;background:#edf2f7;border-radius:999px;overflow:hidden;position:relative}
+    .meter span{display:block;height:100%;background:linear-gradient(90deg,#22c55e,#16a34a);width:0}
+
+    .footnote{margin-top:14px;font-size:12px;color:var(--muted)}
+    .disclaimer{margin-top:10px;color:#64748b;font-size:12px}
+
+    .cta{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap}
+    .cta a{background:#0f172a;color:#fff;text-decoration:none;padding:12px 14px;border-radius:12px}
+    .cta .ghost{background:transparent;border:1px solid #cbd5e1;color:#0f172a}
+
+    /* Mailchimp form styling */
+    .mc{margin-top:18px;background:#f8fafc;border:1px solid #e6edf3;border-radius:14px;padding:16px}
+    .mc h3{margin:0 0 8px;font-size:16px}
+    .mc .row{grid-template-columns:2fr 1fr}
+    .mc input[type=email]{border:1px solid #cbd5e1}
+    .mc .tiny{font-size:12px;color:var(--muted);margin-top:8px}
+
+    /* Sharkey header card */
+    .sharkey-card{
+      display:flex;align-items:center;gap:12px;margin-bottom:8px
+    }
+    .sharkey-logo{
+      width:40px;height:40px;display:inline-block;border-radius:10px;
+      background:linear-gradient(135deg, var(--primary), var(--primary-2));
+      position:relative;box-shadow:0 6px 18px rgba(0,0,0,.25);
+    }
+    .sharkey-logo:after{
+      content:'';position:absolute;inset:8px;border-radius:6px;border:2.5px solid #fff;opacity:.9
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <span class="sharkey-logo" aria-hidden="true"></span>
+        <div>
+          <h1>Sharkey Real Estate Investment Advisors</h1>
+          <small>Rental Wealth Salary Replacement Calculator</small>
+        </div>
+      </div>
+      <span class="badge">Calculator • v1</span>
+    </header>
+
+    <section class="hero">
+      <div class="inner">
+        <h2>See how close you are to replacing <strong>$100,000</strong></h2>
+        <p>This calculator looks beyond monthly cash flow and includes principal paydown, appreciation, and depreciation benefits.</p>
+
+        <div class="grid">
+          <!-- INPUTS -->
+          <div class="panel">
+            <div class="row">
+              <div>
+                <label>Number of Rentals</label>
+                <input id="units" type="number" min="1" value="3"/>
+              </div>
+              <div>
+                <label>Market Value per Unit ($)</label>
+                <input id="value" type="number" value="300000"/>
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                <label>Monthly Rent per Unit ($)</label>
+                <input id="rent" type="number" value="1950"/>
+              </div>
+              <div>
+                <label>Monthly Expenses per Unit ($) <small>(PITI+HOA)</small></label>
+                <input id="exp" type="number" value="1600"/>
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                <label>Appreciation (%/yr)</label>
+                <input id="app" type="number" value="3"/>
+              </div>
+              <div>
+                <label>Principal Paydown ($/yr/unit)</label>
+                <input id="pp" type="number" value="4000"/>
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                <label>Depreciation ($/yr/unit)</label>
+                <input id="dep" type="number" value="7000"/>
+              </div>
+              <div>
+                <label>Tax Rate (% for W-2 comparison)</label>
+                <input id="tax" type="number" value="30"/>
+              </div>
+            </div>
+            <button class="btn" id="calc">Calculate</button>
+            <div class="footnote">Defaults are conservative. Adjust to your market and financing.</div>
+          </div>
+
+          <!-- OUTPUTS -->
+          <div class="panel" id="out">
+            <div class="stats">
+              <div class="stat"><h4>Cash Flow / yr</h4><div class="val" id="cashVal">$0</div></div>
+              <div class="stat"><h4>Principal Paydown / yr</h4><div class="val" id="ppVal">$0</div></div>
+              <div class="stat"><h4>Appreciation / yr</h4><div class="val" id="appVal">$0</div></div>
+              <div class="stat"><h4>Depreciation Shield</h4><div class="val" id="depVal">$0</div></div>
+            </div>
+            <div class="stat" style="margin-top:14px">
+              <h4>Total Annual Wealth Gain</h4>
+              <div class="val" id="totalVal">$0</div>
+            </div>
+
+            <div style="margin-top:14px">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <h4 style="margin:0">Progress toward $100,000</h4>
+                <div class="val" id="pctVal" style="font-size:18px">0%</div>
+              </div>
+              <div class="meter"><span id="meterBar"></span></div>
+            </div>
+
+            <div class="stat" style="margin-top:14px;background:#dbeafe;border-color:#93c5fd">
+              <h4>W-2 Salary Equivalent</h4>
+              <div class="val" id="w2Val">$0</div>
+            </div>
+
+            <p class="disclaimer">This tool is for educational estimates only and is not tax or investment advice. Appreciation and expenses vary by market. Consult your advisors.</p>
+
+            <div class="cta">
+              <a href="#contact">Get a free rental wealth analysis</a>
+              <a class="ghost" href="#learn">How we calculate this</a>
+            </div>
+
+            <!-- Mailchimp capture -->
+            <div class="mc">
+              <h3>Get your full breakdown by email</h3>
+              <form id="mc-form" action="https://247propertymanagement.us17.list-manage.com/subscribe/post?u=28a4b4e9127c381eae42b7373&id=a54ed95ed0" method="post" target="_blank" novalidate>
+                <div class="row">
+                  <input type="email" name="EMAIL" id="mce-EMAIL" placeholder="you@email.com" required>
+                  <button class="btn" type="submit">Send my full analysis</button>
+                </div>
+                <input type="hidden" name="NOTE" id="mc-NOTE" value="">
+                <div class="tiny">
+                  By submitting, you agree to our
+                  <a href="https://sharkeyrealty.com/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>
+                  and understand you may unsubscribe at any time.
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+  (function(){
+    const $id = (id)=>document.getElementById(id);
+    const fmt = (n)=> n.toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0});
+
+    function calc(){
+      const units = +($id("units")?.value || 0);
+      const value = +($id("value")?.value || 0);           // per unit
+      const rent  = +($id("rent")?.value || 0);            // per unit
+      const exp   = +($id("exp")?.value || 0);             // per unit
+      const app   = (+($id("app")?.value || 0)) / 100;     // rate
+      const pp    = +($id("pp")?.value || 0);              // per unit per year
+      const dep   = +($id("dep")?.value || 0);             // per unit per year
+      const tax   = (+($id("tax")?.value || 0)) / 100;     // for W-2 gross-up
+
+      const cfPer = (rent - exp) * 12;                 // per unit
+      const appPer = value * app;                      // per unit
+
+      const cash = cfPer * units;
+      const ppTot = pp * units;
+      const appTot = appPer * units;
+      const depTot = dep * units;                      // phantom write-off
+
+      const total = cash + ppTot + appTot + depTot;    // total annual impact
+      const pct = Math.max(0, Math.min(1, total / 100000));
+      const w2 = (1 - tax) > 0 ? (total / (1 - tax)) : 0; // W-2 equivalent pre-tax salary
+
+      if($id("cashVal")) $id("cashVal").textContent = fmt(cash);
+      if($id("ppVal")) $id("ppVal").textContent = fmt(ppTot);
+      if($id("appVal")) $id("appVal").textContent = fmt(appTot);
+      if($id("depVal")) $id("depVal").textContent = fmt(depTot);
+      if($id("totalVal")) $id("totalVal").textContent = fmt(total);
+      if($id("pctVal")) $id("pctVal").textContent = Math.round(pct*100) + "%";
+      if($id("meterBar")) $id("meterBar").style.width = (pct*100) + "%";
+      if($id("w2Val")) $id("w2Val").textContent = fmt(w2);
+    }
+
+    document.addEventListener('DOMContentLoaded', calc);
+    $id('calc')?.addEventListener('click', calc);
+
+    // Mailchimp NOTE injection on submit
+    $id('mc-form')?.addEventListener('submit', ()=>{
+      const note = `CashFlow=${$id('cashVal')?.textContent||''}, PP=${$id('ppVal')?.textContent||''}, APP=${$id('appVal')?.textContent||''}, DEP=${$id('depVal')?.textContent||''}, TOTAL=${$id('totalVal')?.textContent||''}, W2=${$id('w2Val')?.textContent||''}`;
+      const hidden = $id('mc-NOTE');
+      if(hidden){ hidden.value = note; }
+    });
+  })();
+  </script>
+</body>
+</html>
